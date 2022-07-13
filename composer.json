@@ -1,0 +1,21 @@
+{
+    "name": "manoaratefy/monolog-pushbullet",
+    "description": "Yet another Monolog handler for Pushbullet",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Manoa Ratefiarison",
+            "email": "manoa@ratefiarison.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^8.54",
+        "guzzlehttp/guzzle": "^7.4"
+    },
+    "autoload": {
+        "psr-0": {
+            "Manoaratefy\\": "src/"
+        }
+    }
+}
