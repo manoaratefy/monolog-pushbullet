@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types=1);
  
-namespace Manoaratefy\PushbulletLogger;
+namespace Manoaratefy\MonologPushbullet;
  
 use Monolog\Level;
+use Monolog\Utils;
+use Monolog\LogRecord;
 use Monolog\Handler\AbstractProcessingHandler;
 use Illuminate\Support\Facades\Http;
  
@@ -10,33 +12,17 @@ class LogHandler extends AbstractProcessingHandler
 {
     private const ENDPOINT_API = 'https://api.pushbullet.com/v2/';
 
-    /**
-     * Pushbullet access token.
-     */
-    protected $accessToken;
-
-    /**
-     * Pushbullet notification title.
-     */
+    private string $accessToken;
     protected $title;
-
-    /**
-     * Pushbullet email to notify.
-     */
     protected $emails;
 
     /**
      * @param  string        $accessToken  Pushbullet access token
      * @param  string|array  $emails       Pushbullet email(s) account(s) to notify
+     * @param  string        $title        Pushbullet notification title
      */
-    public function __construct(
-        string $accessToken,
-        string $emails,
-        string $title = '',
-        $level = Level::Debug,
-        bool   $bubble = true
-    ) {
-
+    public function __construct(string $accessToken, string|array $emails, string $title = '',int|string|Level $level = Level::Error, bool $bubble = true)
+    {
         parent::__construct($level, $bubble);
 
         $this->title = $title;
@@ -52,9 +38,6 @@ class LogHandler extends AbstractProcessingHandler
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function write(array $record): void
     {
         $this->send($record['formatted']);
@@ -67,7 +50,7 @@ class LogHandler extends AbstractProcessingHandler
     {
         foreach ($this->emails as $email)
         {
-            Http::withHeaders([
+            $response = Http::withHeaders([
                 'Access-Token' => $this->accessToken,
             ])->post(self::ENDPOINT_API . 'pushes', [
                 'type'  => 'note',
@@ -75,6 +58,7 @@ class LogHandler extends AbstractProcessingHandler
                 'body'  => $message,
                 'email' => $email,
             ]);
+            dd($response->json());
         }
     }
 }
