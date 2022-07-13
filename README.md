@@ -77,4 +77,4 @@ You can provide multiple email accounts by separating them with a comma (`,`) or
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
