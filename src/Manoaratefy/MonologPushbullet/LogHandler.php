@@ -58,7 +58,6 @@ class LogHandler extends AbstractProcessingHandler
                 'body'  => $message,
                 'email' => $email,
             ]);
-            dd($response->json());
         }
     }
 }
