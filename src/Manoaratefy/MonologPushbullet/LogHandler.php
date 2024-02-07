@@ -38,9 +38,9 @@ class LogHandler extends AbstractProcessingHandler
         }
     }
 
-    protected function write(array $record): void
+    protected function write(LogRecord $record): void
     {
-        $this->send($record['formatted']);
+        $this->send($record->formatted);
     }
 
     /**
